@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta property="og:title" content="A Particular Nowhere - Sterling Crispin - 2014"/>
+		<meta property="og:url" content="http://www.sterlingcrispin.com/aparticularnowhere.html" />
+		<meta property="og:type" content="website"/>
+		<meta property="og:image" content="http://www.sterlingcrispin.com/aparticularnowhere/files/aparticularnowhere.jpg" />
+		<meta property="og:image:type" content="image/jpg" />
+		<meta property="og:image:width" content="1101" />
+		<meta property="og:image:height" content="719" />
+
+		<meta property="og:description"
+		content="A Particular Nowhere - Sterling Crispin - 2014 - html5/webgl" />
+		<meta property="twitter:card" content="summary" />
+		<meta property="twitter:creator" content="sterlingcrispin" />
+ 	 	<title id="page_title">A Particular Nowhere - Sterling Crispin - 2014</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<!--
+
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+.....................,,,,,,,,,,,,,,,,,,,,,,,,...................................
+.....................,,,,,:::::::::::::::,,,,,,,,...............................
+....................,,,,::::~~~===~~~~~~~~~:::,,,,,.............................
+....................,,,,::~~==+++++++++++====~~~:,,,,...........................
+...................,,,,::~~=+++???,.........,++=~~::,,,.........................
+.................,,,,:::~~=+??+.................+=~~:,,,,.......................
+................,,,,::~~=++?=.....................+==~~::,,,....................
+.................,,:~~=++??,.......................:?++=~~::,,,.................
+................,,::~=++?I,.........................,??+==~~::,,,...............
+...............,,,:~=++?I,...........................,??+=~~::,,,,..............
+...............,,,:~=+?I:.............................I?++=~~::,,,..............
+...............,,::~=+?7,.............................,I?+=~~::,,,..............
+..............,,,:~=++I=...............................I??+=~::,,...............
+..............,,,:~~=+?,...............................II?+=~::,,,..............
+..............,,,::~=+?,...............................I??+=~::,,,..............
+...............,,::~=+?~...............................I??+=~::,,,..............
+...............,,::~==+?..............................,I??+=~::,,,,.............
+...............,,,::~=+?,.............................II?+==~::,,,..............
+................,,,:~=++?............................~I?++=~::,,,,..............
+................,,,::~=++?..........................,??+==~::,,,,...............
+..................,,,:~~=+?,.......................+I?+=~:::,,,.................
+...................,,,:~~==++....................,I??+=~::,,,,,.................
+.....................,,::~~==++................,I??++=~::,,,....................
+.......................,,,,::~==+?,........,=I??+++=~~::,,,.....................
+..........................,,,:::~~==++?????++++===~~~::,,,......................
+...........................,,,,::::~~~========~~~:::::,,,.......................
+.............................,,,,,::::::~~~~~:::::,,,,,,,.......................
+..................................,,,,,,,:,:,:,,,,,,,,,.........................
+.......................................,,,,,,,,,,..,............................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+................................................................................
+-->
+
+		<style type="text/css">
+			body {
+				background:#ffffff;
+				padding:0;
+				margin:0;
+				font-weight: bold;
+				overflow:hidden;
+			}
+			#info,#error {
+				position: absolute;
+				top: 5px; width: 100%;
+				padding: 0px;
+				font-family: Monospace;
+				font-size: 10px;
+				text-align: left;
+				z-index:100;
+			}
+			#error{
+				top:40px;
+				font-size:20px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="error"></div>
+		<canvas id="blankcanvas"></canvas>
+
+		<script src="files/js/three.min.js"></script>
+		<script src="files/js/controls/FlyControls.js"></script>
+		<script src="files/js/aparticularnowhere.js"></script>
+
+		<script>
+		function pageLoaded(){
+			var canvas;
+			canvas = document.getElementById("blankcanvas");
+			canvas.width =0;
+			canvas.height =0;
+			var experimental = false;
+
+			 try { gl = canvas.getContext("webgl"); }
+			    catch (x) { gl = null; }
+
+			    if (gl == null) {
+			        try { gl = canvas.getContext("experimental-webgl"); experimental = true; }
+			        catch (x) { gl = null; }
+			    }
+
+			    if (gl) {
+
+			    } else if ("WebGLRenderingContext" in window) {
+					 error.innerHTML ='<h3>Attention:</h3> You are using an outdated web browser or you have WebGL disabled '+
+					 				'download the latest version of <a href="http://www.chrome.com">Chrome</a> or <a href="https://www.mozilla.org/firefox/">Firefox</a> or go here <a href="http://get.webgl.org">get.webgl.org</a> to find out more.';  
+                    ;
+			    } else {
+					 error.innerHTML ='<h3>Attention:</h3> You are using an outdated web browser or you have WebGL disabled '+
+					 				'download the latest version of <a href="http://www.chrome.com">Chrome</a> or <a href="https://www.mozilla.org/firefox/">Firefox</a> or go here <a href="http://get.webgl.org">get.webgl.org</a> to find out more';  
+				}
+
+			}
+
+
+		window.onload = pageLoaded;
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Generative Boids</title>
+        <meta name="description" content="A html5 boid experiment with an artistic twist - as the inherent behaviour makes some intracate art" >
+	    <meta name="author" content="Tim Holman">
+
+		<style>
+            body {
+                margin: 0px;
+                padding: 0px;
+                overflow: hidden;
+            }
+
+/* ----- INFO & SHARING -----  */
+
+#back,
+#info-tab {
+	display: none;
+}
+			
+        </style>
+
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <script src="js/brushes/sketchy.js"></script>
+        <script src="js/brushes/web.js"></script>
+        <script src="js/brushes/chrome.js"></script>
+        <script src="js/brushes/shaded.js"></script>
+        <script src="js/brushes/fur.js"></script>
+        <script>
+            window.requestAnimationFrame = (function(){
+                return  window.requestAnimationFrame       || 
+                    window.webkitRequestAnimationFrame || 
+                    window.mozRequestAnimationFrame    || 
+                    window.oRequestAnimationFrame      || 
+                    window.msRequestAnimationFrame     || 
+                    function( callback ){
+                      window.setTimeout(callback, 1000 / 60);
+                    };
+                })();
+        </script>
+		<script src="js/generativeBoids.js"> </script>
+		
+	<script type='text/javascript'>
+		
+	    window.onload = function() {
+		  var boids = new Boids();
+		  boids.init();
+	    };
+	    
+		</script>
+
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22825241-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+    </head>
+    <body>
+
+                <!-- Header -->
+        <div id="info-tab">         
+            <div class="info first">
+                <b>Generative Boids</b> is an experiment combining flocking and simple ai behaviour with stylised drawing techniques. Click the screen to refresh and redraw.
+                <p> 
+                    Made by: <a href="http://tholman.com"> Tim Holman </a> - <a href="http://twitter.com/twholman" title="You'll love my tweets, I promise ;)"> @twholman </a>
+                </p>
+            </div>
+            <div class="info">
+                Made with <i> Javascript </i> and the HTML5 <i> canvas </i> element... Brushes borrowed from <a href="http://mrdoob.com/projects/harmony/"> Harmony </a>
+                <p>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://tholman.com/generative-boids" data-text="Texter - Draw pictures with text! - by @twholman -"> Tweet </a>
+                    <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftholman.com%2Fexperiments%2Fhtml5%2Fgenerative%2F01&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:107px; height:21px; margin-bottom: -1px;" allowTransparency="true"></iframe>
+                </p>
+            </div>
+            <div id="title">Generative Boids</div>
+        </div>
+        <div id="back">
+            <a href="/"> More experiments </a> <span>&lsaquo;</span>
+        </div>
+        <script type="text/javascript" src="js/header.js"></script>
+
+
+        <canvas id='canvas'></canvas>
+    </body>
+</html>

@@ -1,0 +1,147 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>JS1k, classic demo submission "Le Moustache"</title>
+    <meta charset="utf-8" />
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        #c {
+            display: block;
+        }
+        /* kill scrollbars from hell */
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    <script>
+        var a = document.getElementsByTagName('canvas')[0];
+        var b = document.body;
+        var d = function (e) { return function () { e.parentNode.removeChild(e); }; }(a);
+        // unprefix some popular vendor prefixed things (but stick to their original name)
+        var AudioContext =
+          window.AudioContext ||
+          window.webkitAudioContext;
+        var requestAnimationFrame =
+          window.requestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function (f) { setTimeout(f, 1000 / 30); };
+
+        // fix bug in safari: http://qfox.nl/weblog/218
+        document.body.clientWidth;
+        // auto resize (original) canvas. call `onresize(w,h) to limit the size of the canvas
+        (window.onorientationchange = window.onresize = function (a) {
+            var mw = Infinity;
+            var mh = Infinity;
+            var min = Math.min;
+
+            return function (w, h) {
+                if (arguments.length === 2) {
+                    mw = w;
+                    mh = h;
+                }
+                a.style.width = (a.width = min(mw, innerWidth)) + 'px';
+                a.style.height = (a.height = min(mh, innerHeight)) + 'px';
+            };
+        }(a))();
+
+        var c = a.getContext('2d');
+    </script>
+    <script>
+        // start of submission //
+        function t4(f) { f(0); f(1); f(2); f(3); }
+
+        b.onmousemove = q = function (p) {
+            u = p.pageX;
+            v = p.pageY;
+            d.r = -.2 * (v - h / 2)/h;
+            d.s = .9;
+            d.x = w / 2 + .05 * w;
+            d.y = h / 2 - .05 * (u - w / 2);
+        }
+
+        addEventListener('touchmove', function (p) {
+            p.preventDefault();
+            q(p.touches[0]);
+        });
+
+
+        // building block for 2D http://en.wikipedia.org/wiki/Lindenmayer_system
+        function L(p, a) {
+            with (f) { // f == b[2].c
+                save(); // push matrix
+                translate(p.x, p.y); rotate(-p.r); scale(p.s, p.s); translate(-w / 2, -h / 2); // multiply matrix
+                globalCompositeOperation = 'lighter'; // enable additive blend
+                drawImage(d, 0, 0); // add s-scaled copy of b[3] translated to x/y and rotated by r
+                if (a) { fillStyle = "#030201"; fillRect(0, 0, w, h) }; // increment color in the transformed rectangle
+                restore(); // pop matrix
+            }
+        }
+
+        w = h = u = v = 0;
+        k = a;
+        (function anim() {
+            requestAnimationFrame(anim);
+
+            if (k.height != h || k.width != w) { // because window resize rocks bigtime
+                w = k.width; h = k.height;
+                b = []; // "framebuffers" and control points in the same array to save some chars
+                t4(function (i) {
+                    e = d; // cheaper way to access b[2] later on
+                    f = a; // and b[2].c too            
+                    d = b[i] = document.createElement("canvas"); // b[3] at last.
+                    d.width = w; d.height = h;
+                    a = d.c = d.getContext('2d');
+                });
+                g = b[0]; j = b[1];
+
+                s = w * 0.;
+                t = h / 2;
+
+                d.r = -.02 * (v - h / 2)*0;
+                d.s = .9;
+                d.x = w / 2 + .05 * w;
+                d.y = h / 2 - .02 * (v - h / 2)*0.;
+
+                j.r = -1;
+                j.s = e.s = .26;
+                j.x = e.x = s + w * .1;
+
+                y = h * 0.2;
+                j.y = t + y;
+
+                e.r = 1;
+                e.y = t - y;
+
+            }
+            f.fillStyle = "#000";
+            f.fillRect(0, 0, w, h); // clear offscreen-rendertarget for the feedback layer
+
+            L(d, 1); // bone
+            L(j); L(e); // feathers
+
+            a.drawImage(e, 0, 0); // draw in a to draw into the feedback loop
+            with (c) {
+                fillStyle = "#000";
+                fillRect(0, 0, w, h);
+                save();
+                scale(.5, .5);
+                translate(w, h / 2);
+                drawImage(e, 0, 0); // right wing
+                scale(-1, 1);
+                drawImage(e, 0, 0); // left wing
+                restore();
+            }
+        })();
+
+        // end of submission //
+    </script>
+</body>
+</html>

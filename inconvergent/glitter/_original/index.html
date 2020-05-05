@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Inconvergent - Glitter</title>
+
+<meta name="twitter:card" content="photo">
+<meta name="twitter:site" content="@inconvergent">
+<meta name="twitter:creator" content="@inconvergent">
+<meta name="twitter:url" content="http://inconvergent.net/glitter/">
+<meta name="twitter:title" content="Inconvergent - Glitter">
+<meta name="twitter:description" content="Glitter, a WebGL experiment">
+<meta name="twitter:image" content="http://inconvergent.net/glitter/img/img.jpg">
+<meta name="twitter:image:width" content="800">
+<meta name="twitter:image:height" content="800">
+
+<meta property="og:title" content="Inconvergent - Glitter" />
+<meta property="og:site_name" content="Inconvergent - Glitter" />
+<meta property="og:url" content="http://inconvergent.net/glitter/" />
+<meta property="og:image" content="http://inconvergent.net/glitter/img/img.jpg" />
+<meta property="og:type" content="website" />
+<meta property="og:description" content="Glitter, a WebGL experiment" />
+<meta name="description" content="Glitter, a WebGL experiment" />
+
+<meta name="author" content="Inconvergent, Anders Hoff" />
+<meta name="keywords" content="generative,art,animation,inconvergent,computational,webgl"/>
+<meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+
+<style>
+/* #Reset & Basics (Inspired by E. Meyers)
+================================================== */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img,
+ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i,
+center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section,
+summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav,
+section {
+  display: block; }
+body {
+  line-height: 1; }
+ol, ul {
+  list-style: none; }
+blockquote, q {
+  quotes: none; }
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body{
+  background-color: #000;
+  color: #FFF;
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Droid Sans', sans-serif;
+  -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+  -webkit-text-size-adjust: 100%;
+  font-style: italic;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 30px;
+  font-style: italic;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+  -webkit-text-size-adjust: 100%;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
+h1,.h1 { font-size: 46px; line-height: 50px; margin-bottom: 14px;}
+h2,.h2 { font-size: 35px; line-height: 40px; margin-bottom: 10px; }
+h3,.h3 { font-size: 28px; line-height: 34px; margin-bottom: 8px; }
+
+strong { font-weight: bold; }
+
+#box canvas {
+  padding: 0px;
+  margin: 0px;
+}
+.message {
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  padding: 10px;
+  text-align: left;
+  width: 350px;
+  opacity: 0.9;
+}
+hr{
+  color: #FFF;
+}
+.content {
+  min-width: 100px;
+  min-height: 100px;
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+}
+a, a.active, a.visited, a.hover{
+  color: #FFF;
+  text-decoration: none;
+}
+</style>
+
+<script src="lib/jquery-1.11.2.js"></script>
+<script src="lib/three.min.js"></script>
+<script src="lib/Detector.js"></script>
+<script src="lib/stats.min.js"></script>
+<script src="lib/ndarray.js"></script>
+<script src="lib/OrbitControls.js"></script>
+<script src="src/grid.js"></script>
+<script src="src/particles.js"></script>
+
+</head>
+<body>
+<div class="content">
+  <div id="box"></div>
+</div>
+<script src="src/main.js"></script>
+</body>
+</html>

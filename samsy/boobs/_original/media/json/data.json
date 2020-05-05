@@ -1,0 +1,76 @@
+{
+    "projects": [
+        {
+            "name": "home",
+            "title" : "Sylvain Pouyet",
+            "description" : "graphic and motion designer",
+            "slideColor" : {
+
+                "r": 255,
+                "g": 255,
+                "b": 255
+            }
+        },
+        {
+            "name": "wayz",
+            "title" : "wayz",
+            "description" : "application tablette",
+            "video": "wayz",
+            "slideColor" : {
+
+                "r": 255,
+                "g": 255,
+                "b": 255
+            }
+        },
+        {
+            "name": "pancakes",
+            "title" : "pancakes",
+            "description" : "APPLICATION SMARTPHONE",
+            "video": "pancakes",
+            "slideColor" : {
+
+                "r": 255,
+                "g": 255,
+                "b": 255
+            }
+        },
+        {
+            "name": "scope",
+            "title" : "scope",
+            "description" : "APPLICATION SECOND ÉCRAN - WEBDESIGN",
+            "video": "scope",
+            "slideColor" : {
+
+                "r": 255,
+                "g": 255,
+                "b": 255
+            }
+        },
+       
+        {
+            "name": "tenveux",
+            "title" : "t'en veux ?",
+            "description" : "APPLICATION SMARTPHONE",
+            "video": "tenveux",
+            "slideColor" : {
+
+                "r": 255,
+                "g": 255,
+                "b": 255
+            }
+        },
+        {
+            "name": "animation",
+            "title" : "motion",
+            "description" : "C'EST COOL ÇA BOUGE",
+            "video": "animation",
+            "slideColor" : {
+
+                "r": 255,
+                "g": 255,
+                "b": 255
+            }
+        }
+    ]
+}

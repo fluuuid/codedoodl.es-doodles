@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>A n-dimensional Chaos Sphere.</title>
+        <meta property="og:url" content="http://caostar.com/3d/caospheresEntity.html" />
+        <meta property="og:title" content="n-dimensional" />
+		<meta property="og:description" content="A n-dimensional Chaos Sphere." />
+		<meta property="og:image" content="http://caostar.com/3d/icons/nChaosSphere.jpg" />
+        <meta property="fb:app_id" content="547136968660417"/>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<div id="optionsButtons" class="buttons">
+			<div  id="inlineDoc" style="display: none !important;">
+			
+		</div> 
+		</div>
+
+		<script src="build/three.min.js"></script>
+        <script src="js/Detector.js"></script>
+		<!--<script src="js/libs/stats.min.js"></script>-->
+
+		<script src="js/custom/chaosphere.js"></script>
+        
+        <script src="js/controls/TrackballControls.js"></script>
+        <script src="js/threex/THREEx.screenshot.js"></script>
+		<script src="js/threex/THREEx.FullScreen.js"></script>
+
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var container; 
+			//var stats;
+
+			var camera, scene, renderer, objects, controls;
+			var particleLight, pointLight;
+			var caoStarsNumber = 100;
+			var caoStars = [];
+			
+			var setMaterial = function(node, material) {
+			  node.material = material;
+			  if (node.children) {
+				for (var i = 0; i < node.children.length; i++) {
+				  setMaterial(node.children[i], material);
+				}
+			  }
+			}
+			
+			var setupFinalMaterials = function(colladaScene, daeScale, _x, _y, _z, _map, _material){
+			
+				var daeSphere = colladaScene.getChildByName("sphere", true);
+				//var daeSphere = colladaScene.getChildByName("Group01", true);
+				//daeSphere.material = new THREE.MeshPhongMaterial(); 
+				daeSphere.material.map = _map; // Problem here, my texture have bad coordinates
+				daeSphere.material.overdraw = false;
+				daeSphere.material = _material;
+				//setMaterial(colladaScene, new THREE.MeshPhongMaterial( { map: daeSphere.material.map } ));
+				
+				//setMaterial(colladaScene, new THREE.MeshBasicMaterial({color: 0xffffff}));
+				//daeSphere.scale.x = daeSphere.scale.y = daeSphere.scale.z = 5;
+				colladaScene.position.set(_x, _y, _z);
+				
+				//colladaScene.scale.x = colladaScene.scale.y = colladaScene.scale.z = daeScale;
+				colladaScene.scale.set(daeScale,daeScale,daeScale);
+				/*daeSphere.scale.set(0.03,0.03,0.03);
+				console.log(colladaScene.getChildByName("Cylinder01", true).scale.x)
+				console.log(colladaScene.getChildByName("Cylinder01", true).scale.y)
+				console.log(colladaScene.getChildByName("Cylinder01", true).scale.z)
+				colladaScene.getChildByName("Cylinder01", true).scale.set(0.006000000052154064,0.18000000715255737,0.006000000052154064);*/
+				colladaScene.updateMatrix();
+				
+				
+				return colladaScene;
+			}
+
+			
+				var sizes = 0.1;
+				var randomMat = 1 + Math.floor(Math.random() * 5);
+				//console.log(randomMat);
+				var map = new   THREE.ImageUtils.loadTexture('./textures/' + randomMat + '.jpg' );
+				var meshPongMaterial = new THREE.MeshPhongMaterial( { map: map } );
+				//
+				var radius = 20;
+				var segments = 16;
+				var rings = 16;
+				
+				var cilinderHeight = radius*5;
+				var cilinderRadius = radius/6;
+				
+				var coneRadiusTop = 0.0001;
+				var coneRadiusBottom = radius/2;
+				var coneY = cilinderHeight/2;
+				var coneHeight = radius/2;
+				
+				var  _material = new THREE.MeshBasicMaterial( { wireframe: true } );
+				var sphereGeometry = new THREE.SphereGeometry(radius, segments, rings);
+				var cylinderGeometry = new THREE.CylinderGeometry( cilinderRadius, cilinderRadius, cilinderHeight, segments, segments );
+				var coneGeometry = new THREE.CylinderGeometry( coneRadiusTop, coneRadiusBottom, coneHeight, segments, segments );
+				//
+				for (var i = 0; i < 25; i++) {
+					var newPiece = createChaosSphere(radius, segments, rings, new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } ), sphereGeometry, cylinderGeometry, coneGeometry);
+					//
+					newPiece = setupFinalMaterials(newPiece, 0.5+Math.random()*1.5, 0,0,0, map, meshPongMaterial);
+					
+					if(i == 0){
+						newPiece.scale.set(2,2,2);
+					}else{
+						newPiece.remove(newPiece.getChildByName("sphere", true));
+					}
+					
+					caoStars[i] = newPiece;
+				}
+				
+				
+				init();
+				animate();
+
+			
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				//camera.position.set( 0.01,0.01,0.01 );
+				camera.position.z = -350;
+				
+				controls = new THREE.TrackballControls( camera );
+
+				scene = new THREE.Scene();
+
+				for ( var i = 0; i < caoStars.length; i ++ ) {
+					scene.add( caoStars[i] );
+				}
+
+				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+				scene.add( particleLight );
+
+				// Lights
+
+				scene.add( new THREE.AmbientLight( 0xcccccc ) );
+
+				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
+				directionalLight.position.x = Math.random() - 0.5;
+				directionalLight.position.y = Math.random() - 0.5;
+				directionalLight.position.z = Math.random() - 0.5;
+				directionalLight.position.normalize();
+				scene.add( directionalLight );
+
+				pointLight = new THREE.PointLight( 0xffffff, 4 );
+				pointLight.position = particleLight.position;
+				scene.add( pointLight );
+
+				renderer = new THREE.WebGLRenderer({
+					antialias		: true,	// to get smoother output
+					//preserveDrawingBuffer	: true	// to allow screenshot
+				});
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				container.appendChild( renderer.domElement );
+
+				/*stats = new Stats();
+				stats.domElement.style.position = 'absolute';
+				stats.domElement.style.top = '0px';
+				container.appendChild( stats.domElement );*/
+
+				//
+				// allow 'p' to make screenshot
+				//THREEx.Screenshot.bindKey(renderer);
+				// allow 'f' to go fullscreen where this feature is supported
+				// if( THREEx.FullScreen.available() ){
+				// 	THREEx.FullScreen.bindKey({dblclick:true}, ['optionsButtons', 'bottomInfos']);		
+				// 	document.getElementById('inlineDoc').innerHTML	+= "Press 'f' or double click for fullscreen.";
+				// }
+				//
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+
+			function animate() {
+
+				
+
+				requestAnimationFrame( animate );
+				
+				render();
+				//stats.update();
+
+			}
+
+			function render() {
+
+				var timer = Date.now() * 0.0005;
+
+				/*camera.position.x = Math.cos( timer ) * 10;
+				camera.position.y = 2;
+				camera.position.z = Math.sin( timer ) * 10;*/
+
+				camera.lookAt( scene.position );
+				
+				for ( var i = 0; i < caoStars.length; i ++ ) {
+					caoStars[i].rotation.x += 0.001*i;
+					caoStars[i].rotation.y += 0.001*i;
+					caoStars[i].rotation.z += 0.001*i;
+					/*caoStars[i].getChildByName("arrow_1", true).position.y = 100 * Math.sin( timer + i * 1.1 );
+					caoStars[i].getChildByName("arrow_2", true).position.y = 100 * Math.sin( timer + i * 1.1 );
+					caoStars[i].getChildByName("arrow_3", true).position.y = 100 * Math.sin( timer + i * 1.1 );
+					caoStars[i].getChildByName("arrow_4", true).position.y = 100 * Math.sin( timer + i * 1.1 );*/
+					//
+					/*caoStars[i].position.x = 2 * Math.cos( timer + i );
+					caoStars[i].position.y = 2 * Math.sin( timer + i * 1.1 );*/
+				}
+
+				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
+				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
+				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+				
+				controls.update();
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>
